@@ -1,13 +1,13 @@
 package com.telusko.springbootrest.model;
 
-
 import java.util.List;
 
-
-import org.springframework.stereotype.Component;
-
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,12 +18,14 @@ import lombok.NoArgsConstructor;
 @Entity
 public class JobPost {
 
-@Id
-	private int postId;
-	private String postProfile; 
-	private String postDesc;
-	private Integer reqExperience;
-	private List<String> postTechStack;
-	
+    @Id
+    private int postId;
+    private String postProfile;
+    private String postDesc;
+    private Integer reqExperience;
 
+    @ElementCollection
+    @CollectionTable(name = "job_post_tech_stack", joinColumns = @JoinColumn(name = "post_id"))
+    @Column(name = "tech")
+    private List<String> postTechStack;
 }
